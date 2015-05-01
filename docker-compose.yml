@@ -6,6 +6,7 @@ api:
     - ./src:/go/src/miniwave.me/api
   links:
     - database
+    - redis
   environment:
     - DB_NAME=miniwaveme_api
 database:
@@ -13,3 +14,8 @@ database:
   command: mongod --smallfiles --quiet --logpath=/dev/null
   volumes:
     - ./data/db:/data/db
+redis:
+  image: redis:3.0
+  command: redis-server --appendonly yes
+  volumes:
+    - ./data/redis:/data
