@@ -3,12 +3,18 @@ api:
   working_dir: /go/src/miniwave.me/api
   command: go run main.go
   volumes:
-    - ./src:/go/src/miniwave.me/api
+    - ./src:/go/src/miniwave.me/api/src
+    - ./log:/go/src/miniwave.me/api/log
+    - ./cache:/go/src/miniwave.me/api/cache
   links:
     - database
     - redis
   environment:
     - DB_NAME=miniwaveme_api
+    - API_PORT=7512
+  ports:
+    - "7512:7512"
+
 database:
   image: mongo:3.0
   command: mongod --smallfiles --quiet --logpath=/dev/null
