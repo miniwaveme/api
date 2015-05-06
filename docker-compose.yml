@@ -6,6 +6,7 @@ api:
     - ./src:/go/src/miniwave.me/api/src
     - ./log:/go/src/miniwave.me/api/log
     - ./cache:/go/src/miniwave.me/api/cache
+    - ./config:/go/src/miniwave.me/api/config
   links:
     - database
     - redis
@@ -25,3 +26,18 @@ redis:
   command: redis-server --appendonly yes
   volumes:
     - ./data/redis:/data
+
+elk:
+  image: willdurand/elk
+  ports:
+    - "7050:80"
+  volumes:
+    - ./config/logstash:/etc/logstash
+  volumes_from:
+    - dataelk
+
+dataelk:
+  image: busybox
+  volumes:
+    - /data
+    - ./data/elk:/data/elk/data
