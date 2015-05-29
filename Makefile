@@ -3,13 +3,13 @@ api-run:
 	docker-compose run api
 
 api-fmt:
-	@docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/src
+	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/src
 
 api-fmt-check:
-	@docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/src
+	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/src
 
 api-test:
-	echo "Not Implemented!!!"
+	echo "Not Implemented"
 
 # docker-compose # 
 cmp-up:
@@ -20,3 +20,7 @@ cmp-pull:
 
 cmp-stop:
 	docker-compose stop
+
+#mongodb#
+mongo-connect:
+	docker exec -t -i api_database_1  /bin/bash
