@@ -8,4 +8,5 @@ type Album struct {
 	Duration int      `json:"duration" bson:"duration"`
 	Cover    Image    `json:"cover" bson:"cover"`
 	Images   []Image  `json:"images" bson:"images"`
+	Year     int      `json:"year" bson:"year"`
 }
