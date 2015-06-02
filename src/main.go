@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	log "github.com/Sirupsen/logrus"
+	config "miniwave.me/api/src/config"
 	"os"
 )
 
@@ -17,4 +18,8 @@ func main() {
 	//log.Fatal("fatal") On fatal app is shutdown
 	//log.Panic("panic") On panic app is shutdown
 	fmt.Println("Hello World")
+
+	config.LoadConfig()
+	conf := config.GetConfig()
+	fmt.Print(conf.GetBool("miniwaveme.log.enabled"))
 }
