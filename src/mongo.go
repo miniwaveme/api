@@ -1,9 +1,9 @@
 package main
 
 import (
-	"api/src/document"
 	"fmt"
 	log "github.com/Sirupsen/logrus"
+	"github.com/miniwaveme/api/src/document"
 	"gopkg.in/mgo.v2"
 )
 

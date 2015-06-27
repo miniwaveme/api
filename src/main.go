@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	log "github.com/Sirupsen/logrus"
-	config "miniwave.me/api/src/config"
+	config "github.com/miniwaveme/api/src/config"
 	"os"
 )
 

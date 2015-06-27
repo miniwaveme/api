@@ -1,12 +1,12 @@
 api:
   image: miniwaveme/golang
-  working_dir: /go/src/miniwave.me/api/src
+  working_dir: /go/src/github.com/miniwaveme/api/src
   command: go run main.go
   volumes:
-    - ./src:/go/src/miniwave.me/api/src
-    - ./log:/go/src/miniwave.me/api/log
-    - ./cache:/go/src/miniwave.me/api/cache
-    - ./config:/go/src/miniwave.me/api/config
+    - ./src:/go/src/github.com/miniwaveme/api/src
+    - ./log:/go/src/github.com/miniwaveme/api/log
+    - ./cache:/go/src/github.com/miniwaveme/api/cache
+    - ./config:/go/src/github.com/miniwaveme/api/config
 
   links:
     - database
@@ -15,8 +15,8 @@ api:
   environment:
     - DB_NAME=miniwaveme_api
     - API_PORT=7512
-    - API_CONFIG_PATH=/go/src/miniwave.me/api/config/api
-    - API_LOG_PATH=/go/src/miniwave.me/api/log/api
+    - API_CONFIG_PATH=/go/src/github.com/miniwaveme/api/config/api
+    - API_LOG_PATH=/go/src/github.com/miniwaveme/api/log/api
   ports:
     - "7512:7512"
 
