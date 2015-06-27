@@ -2,31 +2,31 @@
 
 ##Introduction
 
-This a personnal Spotify/Deezer like, implemented in golang. Currently on developement
+This is a personnal Spotify/Deezer like, implemented in golang. Currently under development
 
 Next steps:
-- web client (AngularJS)
-- desktop client 
+- [web client (AngularJS)](https://github.com/miniwaveme/web-client)
+- [desktop client](https://github.com/miniwaveme/desktop-client)
 
 ##Installation
 
-This project is easily usable througt docker:
+This project is easily usable through docker:
 
 ```bash
 $ make cmp-pull # update/download containers
 $ make cmp-up   # run containers
 $ make cmp run  # run the api
 
-# Some others commands are available, type this to see there
+# Some other commands are available, type this to see them
 $ make help
 ```
 
 ##Documentation
 
-###Api Documentation
-Find the api documentation [here](http://miniwaveme.github.io/docs)
+###API Documentation
+Find the API documentation [here](http://miniwaveme.github.io/docs)
 
-##Maintainers
+##Authors
 - [mhor](http://github.com/mhor)
 - [clebettre](http://github.com/clebettre)
 
