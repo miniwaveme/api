@@ -5,6 +5,8 @@ import (
 	config "github.com/miniwaveme/api/src/config"
 	logger "github.com/miniwaveme/api/src/logger"
 	"github.com/julienschmidt/httprouter"
+	"github.com/minwaveme/api/src/config"
+	"github.com/miniwaveme/api/src/route/v1"
 	"net/http"
 	"os"
 )

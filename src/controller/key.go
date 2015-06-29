@@ -13,7 +13,12 @@ func NewKeyController() *KeyController {
 	return &KeyController{}
 }
 
-func (kc KeyController) GeKey(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func (kc KeyController) GetKeyList(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+}
+
+func (kc KeyController) GetKey(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
 }
