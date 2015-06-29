@@ -15,7 +15,7 @@ This project is easily usable through docker:
 ```bash
 $ make cmp-pull # update/download containers
 $ make cmp-up   # run containers
-$ make cmp run  # run the api
+$ make api-run  # run the api
 
 # Some other commands are available, type this to see them
 $ make help
