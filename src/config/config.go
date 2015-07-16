@@ -15,7 +15,7 @@ func GetConfig() *viper.Viper {
 
 func LoadConfig() {
 
-	configPath := os.Getenv("API_CONFIG_PATH")
+	configPath := os.Getenv("MINIWAVEME_API_CONFIG_PATH")
 
 	if &configPath == nil {
 		configPath = "../../config/api/"
