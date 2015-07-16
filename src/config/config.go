@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"os"
 )
 
 var (
@@ -15,20 +14,14 @@ func GetConfig() *viper.Viper {
 
 func LoadConfig() {
 
-	configPath := os.Getenv("MINIWAVEME_API_CONFIG_PATH")
-
-	if &configPath == nil {
-		configPath = "../../config/api/"
-	}
-
 	gConfig = viper.New()
+	gConfig.SetEnvPrefix("miniwaveme")
+	gConfig.AutomaticEnv()
+
+	gConfig.SetDefault("api_config_path", "../../config/api/")
+	gConfig.SetDefault("log.enabled", true)
 
 	gConfig.SetConfigName("config")
-	gConfig.AddConfigPath(configPath)
-	err := gConfig.ReadInConfig()
-
-	if err != nil {
-		//log.Warn("No configuration file loaded - using defaults")
-		gConfig.SetDefault("miniwaveme.log.enabled", "default")
-	}
+	gConfig.AddConfigPath(gConfig.GetString("api_config_path"))
+	gConfig.ReadInConfig()
 }
