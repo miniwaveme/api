@@ -1,5 +1,4 @@
-miniwaveme:
-  log:
-    enabled: true
-  indexer:
-     enabled: true
+log:
+  enabled: true
+indexer:
+  enabled: true
