@@ -5,23 +5,25 @@ import (
 )
 
 var (
-	gConfig *viper.Viper
+	gConfig = LoadConfig()
 )
 
 func GetConfig() *viper.Viper {
 	return gConfig
 }
 
-func LoadConfig() {
+func LoadConfig() *viper.Viper {
 
-	gConfig = viper.New()
-	gConfig.SetEnvPrefix("miniwaveme")
-	gConfig.AutomaticEnv()
+	vip := viper.New()
+	vip.SetEnvPrefix("miniwaveme")
+	vip.AutomaticEnv()
 
-	gConfig.SetDefault("api_config_path", "../../config/api/")
-	gConfig.SetDefault("log.enabled", true)
+	vip.SetDefault("api_config_path", "../../config/api/")
+	vip.SetDefault("log.enabled", true)
 
-	gConfig.SetConfigName("config")
-	gConfig.AddConfigPath(gConfig.GetString("api_config_path"))
-	gConfig.ReadInConfig()
+	vip.SetConfigName("config")
+	vip.AddConfigPath(vip.GetString("api_config_path"))
+	vip.ReadInConfig()
+
+	return vip
 }
