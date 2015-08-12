@@ -5,6 +5,9 @@ help:
 	@echo "\033[32mAvailable commands\033[0m"
 	@echo "\033[33mAPI\033[0m"
 	@echo "- \033[1mapi-run:\033[0m Run the application"
+	@echo "- \033[1mapi-run-command:\033[0m Run a command (eg: make api-run-command COMMAND=\"run-app.sh\")"
+	@echo "- \033[1mapi-run-go-command:\033[0m Run a command (eg: make api-run-command COMMAND=\"hello_world.go\")"
+
 	@echo "- \033[1mapi-fmt:\033[0m Format the code"
 	@echo "- \033[1mapi-fmt-check:\033[0m Check code format"
 	@echo "- \033[1mapi-test:\033[0m Run application tests"
@@ -18,13 +21,22 @@ help:
 
 # api #
 api-run:
-	docker-compose run api
+	docker-compose run api ./bin/run.sh ./bin/run-app.sh
+
+api-run-command:
+	docker-compose run api ./bin/run.sh ./bin/$(COMMAND)
+
+api-run-go-command:
+	docker-compose run api ./bin/run.sh "go run ./bin/$(COMMAND)"
 
 api-fmt:
 	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/src
+	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/bin
+
 
 api-fmt-check:
 	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/src
+	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/bin
 
 api-test:
 	echo "Not Implemented"

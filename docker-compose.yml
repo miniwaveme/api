@@ -1,9 +1,9 @@
 api:
   image: miniwaveme/golang
-  working_dir: /go/src/github.com/miniwaveme/api/src
-  command: ./run.sh
+  working_dir: /go/src/github.com/miniwaveme/api
   volumes:
     - ./src:/go/src/github.com/miniwaveme/api/src
+    - ./bin:/go/src/github.com/miniwaveme/api/bin
     - ./log:/go/src/github.com/miniwaveme/api/log
     - ./cache:/go/src/github.com/miniwaveme/api/cache
     - ./config:/go/src/github.com/miniwaveme/api/config
