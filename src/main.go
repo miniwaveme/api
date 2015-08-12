@@ -4,7 +4,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/miniwaveme/api/src/config"
 	"github.com/miniwaveme/api/src/logger"
-	"github.com/miniwaveme/api/src/redis"
 	"github.com/miniwaveme/api/src/route"
 	"net/http"
 )
@@ -12,7 +11,6 @@ import (
 func main() {
 
 	conf := config.GetConfig()
-
 	logger.LoadLogger()
 	log := logger.GetLogger()
 	log.Info("application started")
