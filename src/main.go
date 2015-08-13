@@ -11,7 +11,7 @@ import (
 func main() {
 
 	conf := config.GetConfig()
-	logger.LoadLogger()
+
 	log := logger.GetLogger()
 	log.Info("application started")
 

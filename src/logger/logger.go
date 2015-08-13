@@ -6,14 +6,17 @@ import (
 )
 
 var (
-	gLogger *logrus.Logger
+	gLogger = loadLogger()
 )
 
 func GetLogger() *logrus.Logger {
 	return gLogger
 }
 
-func LoadLogger() {
-	gLogger = logrus.New()
-	gLogger.Out = os.Stderr
+func loadLogger() *logrus.Logger {
+
+	logger := logrus.New()
+	logger.Out = os.Stderr
+
+	return logger
 }
