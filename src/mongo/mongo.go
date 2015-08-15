@@ -6,21 +6,23 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+type DataStore struct {
+	session *mgo.Session
+}
+
 var (
-	databaseName  = config.GetConfig().GetString("db_name")
-	gMongoSession = newSession()
+	dataStore = initDataStore()
 )
 
-func GetDatabase() *mgo.Database {
-
-	return gMongoSession.DB(databaseName)
+func GetSession() *mgo.Session {
+	return dataStore.session.Copy()
 }
 
 func newSession() *mgo.Session {
 
 	appConfig := config.GetConfig()
 
-	session, err := mgo.Dial(fmt.Sprintf("%s:%s", appConfig.GetString("db_url"), appConfig.GetString("db_port")))
+	session, err := mgo.Dial(fmt.Sprintf("%s:%s/%s", appConfig.GetString("db_url"), appConfig.GetString("db_port"), config.GetConfig().GetString("db_name")))
 	if err != nil {
 		panic(err)
 	}
@@ -28,4 +30,8 @@ func newSession() *mgo.Session {
 	session.SetMode(mgo.Monotonic, true)
 
 	return session
+}
+
+func initDataStore() *DataStore {
+	return &DataStore{newSession()}
 }
