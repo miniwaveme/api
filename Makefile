@@ -21,13 +21,13 @@ help:
 
 # api #
 api-run:
-	docker-compose run api ./bin/run.sh ./bin/run-app.sh
+	docker-compose run --rm --service-ports api ./bin/run.sh ./bin/run-app.sh
 
 api-run-command:
-	docker-compose run api ./bin/run.sh ./bin/$(COMMAND)
+	docker-compose run --rm api ./bin/run.sh ./bin/$(COMMAND)
 
 api-run-go-command:
-	docker-compose run api ./bin/run.sh "go run ./bin/$(COMMAND)"
+	docker-compose run --rm api ./bin/run.sh "go run ./bin/$(COMMAND).go"
 
 api-fmt:
 	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/src

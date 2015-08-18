@@ -7,7 +7,6 @@ api:
     - ./log:/go/src/github.com/miniwaveme/api/log
     - ./cache:/go/src/github.com/miniwaveme/api/cache
     - ./config:/go/src/github.com/miniwaveme/api/config
-
   links:
     - database
     - redis
