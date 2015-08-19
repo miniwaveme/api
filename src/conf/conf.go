@@ -1,18 +1,16 @@
-package config
+package conf
 
 import (
 	"github.com/spf13/viper"
 )
 
-var (
-	gConfig = LoadConfig()
-)
+var conf = LoadConf()
 
-func GetConfig() *viper.Viper {
-	return gConfig
+func C() *viper.Viper {
+	return conf
 }
 
-func LoadConfig() *viper.Viper {
+func LoadConf() *viper.Viper {
 
 	vip := viper.New()
 	vip.SetEnvPrefix("miniwaveme")

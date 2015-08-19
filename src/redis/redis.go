@@ -3,22 +3,19 @@ package redis
 import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
-	"github.com/miniwaveme/api/src/config"
+	"github.com/miniwaveme/api/src/conf"
 )
 
-var (
-	gRedisConn = newPool()
-)
+var redisCo = newPool()
 
 func newPool() *redis.Pool {
-
-	appConfig := config.GetConfig()
 
 	return &redis.Pool{
 		MaxIdle:   80,
 		MaxActive: 12000,
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.Dial(appConfig.GetString("redis_network"), fmt.Sprintf("%s:%s", appConfig.GetString("redis_url"), appConfig.GetString("redis_port")))
+
+			c, err := redis.Dial(c.GetString("redis_network"), getUrl())
 			if err != nil {
 				panic(err.Error())
 			}
@@ -34,4 +31,9 @@ func Do(commandName string, args ...interface{}) (reply interface{}, err error) 
 	defer c.Close()
 
 	return c.Do(commandName, args)
+}
+
+func getUrl() string {
+
+	return fmt.Sprintf("%s:%s", c.GetString("redis_url"), c.GetString("redis_port"))
 }
