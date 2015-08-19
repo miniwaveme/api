@@ -7,7 +7,6 @@ help:
 	@echo "- \033[1mapi-run:\033[0m Run the application"
 	@echo "- \033[1mapi-run-command:\033[0m Run a command (eg: make api-run-command COMMAND=\"run-app.sh\")"
 	@echo "- \033[1mapi-run-go-command:\033[0m Run a command (eg: make api-run-command COMMAND=\"hello_world.go\")"
-
 	@echo "- \033[1mapi-fmt:\033[0m Format the code"
 	@echo "- \033[1mapi-fmt-check:\033[0m Check code format"
 	@echo "- \033[1mapi-test:\033[0m Run application tests"
