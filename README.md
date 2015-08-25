@@ -1,4 +1,4 @@
-#MiniWaveMe
+#MiniWaveMe [![Build Status](https://travis-ci.org/miniwaveme/api.svg?branch=master)](https://travis-ci.org/miniwaveme/api)
 
 ##Introduction
 
