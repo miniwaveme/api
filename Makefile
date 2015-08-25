@@ -29,13 +29,10 @@ api-run-go-command:
 	docker-compose run --rm api ./bin/run.sh "go run ./bin/$(COMMAND).go"
 
 api-fmt:
-	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/src
-	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -w /go/bin
-
+	docker run --rm -v `pwd`:/go golang:1.4 gofmt -w /go
 
 api-fmt-check:
-	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/src
-	docker run --rm -v `pwd`/src:/go/src golang:1.4 gofmt -d /go/bin
+	docker run --rm -v `pwd`:/go golang:1.4 gofmt -d /go
 
 api-test:
 	echo "Not Implemented"
