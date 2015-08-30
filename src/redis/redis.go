@@ -15,7 +15,7 @@ func newPool() *redis.Pool {
 		MaxActive: 12000,
 		Dial: func() (redis.Conn, error) {
 
-			c, err := redis.Dial(c.GetString("redis_network"), getUrl())
+			c, err := redis.Dial(conf.C().GetString("redis_network"), getUrl())
 			if err != nil {
 				panic(err.Error())
 			}
@@ -27,7 +27,7 @@ func newPool() *redis.Pool {
 
 func Do(commandName string, args ...interface{}) (reply interface{}, err error) {
 
-	c := gRedisConn.Get()
+	c := redisCo.Get()
 	defer c.Close()
 
 	return c.Do(commandName, args)
@@ -35,5 +35,5 @@ func Do(commandName string, args ...interface{}) (reply interface{}, err error) 
 
 func getUrl() string {
 
-	return fmt.Sprintf("%s:%s", c.GetString("redis_url"), c.GetString("redis_port"))
+	return fmt.Sprintf("%s:%s", conf.C().GetString("redis_url"), conf.C().GetString("redis_port"))
 }

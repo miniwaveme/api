@@ -28,14 +28,14 @@ api-run-command:
 api-run-go-command:
 	docker-compose run --rm api ./bin/run.sh "go run ./bin/$(COMMAND).go"
 
+api-test:
+	docker-compose run --rm api go test -v ./...
+
 api-fmt:
 	docker run --rm -v `pwd`:/go golang:1.4 gofmt -w /go
 
 api-fmt-check:
 	docker run --rm -v `pwd`:/go golang:1.4 gofmt -d /go
-
-api-test:
-	echo "Not Implemented"
 
 # docker-compose # 
 cmp-up:

@@ -4,4 +4,6 @@ go:
  - 1.4
 
 script:
+ - go get ./...
  - ./test/check-gofmt.sh
+ - go test -v ./...
