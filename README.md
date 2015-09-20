@@ -31,7 +31,7 @@ $ make help
 ```create_master_key```: Create the first app key (a key is necessary to create an app key)
 
 ```
-$ make make api-run-go-command COMMAND="create_master_key"
+$ make api-run-go-command COMMAND="create_master_key"
 
 app_key: 1fe50f00-fcc0-4aa5-9d76-35bf215e92ad | app_secret: 89c685e5-aa97-4dfc-8391-1a8f6aee3d9c
 
