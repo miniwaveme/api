@@ -23,7 +23,7 @@ api-run:
 	docker-compose run --rm --service-ports api ./bin/run.sh ./bin/run-app.sh
 
 api-run-command:
-	docker-compose run --rm api ./bin/run.sh ./bin/$(COMMAND)
+	docker-compose run --rm api ./bin/run.sh ./bin/$(COMMAND).sh
 
 api-run-go-command:
 	docker-compose run --rm api ./bin/run.sh "go run ./bin/$(COMMAND).go"
