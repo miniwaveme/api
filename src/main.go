@@ -13,7 +13,7 @@ func main() {
 	c := conf.C()
 
 	log := logger.GetLogger()
-	log.Info("application started")
+	log.Info("applicationclear started")
 
 	r := httprouter.New()
 	route.RegisterRoutesV1(r)

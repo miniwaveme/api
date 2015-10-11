@@ -5,7 +5,7 @@ import (
 )
 
 type Album struct {
-	Id       bson.ObjectId `json:"id" bson:"_id"`
+	Id       bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Name     string        `json:"name" bson:"name"`
 	Artists  []Artist      `json:"artists" bson:"artists"`
 	NbTrack  int           `json:"nb_track" bson:"nb_track"`

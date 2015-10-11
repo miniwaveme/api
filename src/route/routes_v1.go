@@ -5,7 +5,7 @@ import (
 	"github.com/miniwaveme/api/src/controller"
 )
 
-func RegisterRoutesV1(r *httprouter.Router) {
+func RegisterRoutesV1(r *httprouter.Router) *httprouter.Router {
 
 	// Register app keys routes
 	kc := controller.NewKeyController()
@@ -38,4 +38,6 @@ func RegisterRoutesV1(r *httprouter.Router) {
 	r.PUT("/v1/album/:id", alc.UpdateAlbum)
 	r.POST("/v1/album", alc.CreateAlbum)
 	r.DELETE("/v1/album/:id", alc.RemoveAlbum)
+
+	return r
 }
