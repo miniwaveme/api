@@ -7,5 +7,5 @@ import (
 type Artist struct {
 	Id     bson.ObjectId `json:"id" bson:"_id"`
 	Name   string        `json:"name" bson:"name"`
-	Images []Image       `json:"images" bson:"images"`
+	Images Image         `json:"image" bson:"image"`
 }
