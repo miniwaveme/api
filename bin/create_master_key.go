@@ -5,7 +5,7 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/fatih/color"
 	"github.com/miniwaveme/api/src/logger"
-	"github.com/miniwaveme/api/src/repo"
+	"github.com/miniwaveme/api/src/manager"
 	"os"
 )
 
@@ -17,7 +17,7 @@ func main() {
 
 		log := logger.GetLogger()
 
-		appKey, appSecret, err := repo.CreateMasterKey()
+		appKey, appSecret, err := manager.CreateMasterKey()
 
 		if err != nil {
 			log.Fatal(err)

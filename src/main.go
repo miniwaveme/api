@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"github.com/miniwaveme/api/src/conf"
 	"github.com/miniwaveme/api/src/logger"
 	"github.com/miniwaveme/api/src/route"
-	"net/http"
+	"github.com/miniwaveme/api/src/router"
 )
 
 func main() {
@@ -15,8 +14,9 @@ func main() {
 	log := logger.GetLogger()
 	log.Info("application started")
 
-	r := httprouter.New()
+	r := router.New()
 	route.RegisterRoutesV1(r)
+	r.Use(logger.LogRequestMiddleware)
 
-	log.Fatal(http.ListenAndServe(":"+c.GetString("api_port"), r))
+	log.Fatal(r.Run(":" + c.GetString("api_port")))
 }

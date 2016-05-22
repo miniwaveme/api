@@ -1,41 +1,35 @@
 package route
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"github.com/miniwaveme/api/src/controller"
+	"github.com/miniwaveme/api/src/router"
 )
 
-func RegisterRoutesV1(r *httprouter.Router) {
-
+func RegisterRoutesV1(r *router.Router) {
 	// Register app keys routes
 	kc := controller.NewKeyController()
-	r.GET("/v1/key/list/:page", kc.GetKeyList)
-	r.GET("/v1/key/get/:id", kc.GetKey)
-	r.PUT("/v1/key/:id", kc.UpdateKey)
-	r.POST("/v1/key", kc.CreateKey)
-	r.DELETE("/v1/key/:id", kc.RemoveKey)
-
-	// Register tracks routes
-	tc := controller.NewTrackController()
-	r.GET("/v1/track/list/:page", tc.GetTrackList)
-	r.GET("/v1/track/get/:id", tc.GetTrack)
-	r.PUT("/v1/track/:id", tc.UpdateTrack)
-	r.POST("/v1/track", tc.CreateTrack)
-	r.DELETE("/v1/track/:id", tc.RemoveTrack)
+	r.AddRoute("GET", "/v1/key/list", kc.GetKeyList)
+	r.AddRoute("GET", "/v1/key/get/:id", kc.GetKey)
+	r.AddRoute("PUT", "/v1/key/:id", kc.UpdateKey)
+	r.AddRoute("POST", "/v1/key", kc.CreateKey)
+	r.AddRoute("DELETE", "/v1/key/:id", kc.RemoveKey)
 
 	// Register artists routes
 	arc := controller.NewArtistController()
-	r.GET("/v1/artist/list/:page", arc.GetArtistList)
-	r.GET("/v1/artist/get/:id", arc.GetArtist)
-	r.PUT("/v1/artist/:id", arc.UpdateArtist)
-	r.POST("/v1/artist", arc.CreateArtist)
-	r.DELETE("/v1/artist/:id", arc.RemoveArtist)
+	r.AddRoute("GET", "/v1/artist/list", arc.GetArtistList)
+	r.AddRoute("GET", "/v1/artist/get/:id", arc.GetArtist)
+	r.AddRoute("PUT", "/v1/artist/:id", arc.UpdateArtist)
+	r.AddRoute("POST", "/v1/artist", arc.CreateArtist)
+	r.AddRoute("DELETE", "/v1/artist/:id", arc.RemoveArtist)
 
 	// Register albums routes
 	alc := controller.NewAlbumController()
-	r.GET("/v1/album/list/:page", alc.GetAlbumList)
-	r.GET("/v1/album/get/:id", alc.GetAlbum)
-	r.PUT("/v1/album/:id", alc.UpdateAlbum)
-	r.POST("/v1/album", alc.CreateAlbum)
-	r.DELETE("/v1/album/:id", alc.RemoveAlbum)
+	r.AddRoute("GET", "/v1/album/list", alc.GetAlbumList)
+	r.AddRoute("GET", "/v1/album/get/:id", alc.GetAlbum)
+	r.AddRoute("PUT", "/v1/album/:id", alc.UpdateAlbum)
+	r.AddRoute("POST", "/v1/album", alc.CreateAlbum)
+	r.AddRoute("DELETE", "/v1/album/:id", alc.RemoveAlbum)
+	r.AddRoute("POST", "/v1/album/:id/track/:nb", alc.AddAlbumTrack)
+	r.AddRoute("PUT", "/v1/album/:id/track/:nb", alc.UpdateAlbumTrack)
+	r.AddRoute("DELETE", "/v1/album/:id/track/:nb", alc.RemoveAlbumTrack)
 }

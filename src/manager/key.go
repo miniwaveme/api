@@ -1,4 +1,4 @@
-package repo
+package manager
 
 import (
 	"github.com/miniwaveme/api/src/db"
@@ -7,13 +7,15 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+const KeyCollection = "key"
+
 func CreateMasterKey() (string, string, error) {
 	return CreateAppKey(document.RoleMaster)
 }
 
 func CreateAppKey(role string) (string, string, error) {
 
-	col := db.DS().DefaultDB().C("key")
+	col := db.DS().DefaultDB().C(KeyCollection)
 	oid := bson.NewObjectId()
 	err := col.Insert(&document.Key{Id: oid, AppKey: uuid.NewV4().String(), AppSecret: uuid.NewV4().String(), Roles: []string{role}})
 
