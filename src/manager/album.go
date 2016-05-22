@@ -5,6 +5,7 @@ import (
 	"github.com/miniwaveme/api/src/document"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"image"
 )
 
 const AlbumCollection = "album"
@@ -27,16 +28,25 @@ func FindAlbums(skip int, pageSize int) ([]document.Album, error) {
 	return albums, err
 }
 
-func CreateAlbum(name string, year int, artist *document.Artist) (*document.Album, error) {
+func CreateAlbum(name string, year int, artist *document.Artist, image image.Image) (*document.Album, error) {
 	col := db.DS().DefaultDB().C(AlbumCollection)
 	oid := bson.NewObjectId()
 	album := &document.Album{Id: oid, Name: name, Year: year, ArtistRef: artist.Id, Artist: *artist}
+
+	if image != nil {
+		albumCover, err := CreateImage(image)
+		if err != nil {
+			return album, err
+		}
+		album.Cover = *albumCover
+	}
+
 	err := col.Insert(album)
 
 	return album, err
 }
 
-func UpdateAlbum(oid string, name string, year int, artist *document.Artist) (*document.Album, error) {
+func UpdateAlbum(oid string, name string, year int, artist *document.Artist, image image.Image) (*document.Album, error) {
 	col := db.DS().DefaultDB().C(AlbumCollection)
 	album := &document.Album{}
 
@@ -51,6 +61,14 @@ func UpdateAlbum(oid string, name string, year int, artist *document.Artist) (*d
 
 	if artist.Id != "" {
 		update["artist"] = artist.Id
+	}
+
+	if image != nil {
+		albumCover, err := CreateImage(image)
+		if err != nil {
+			return album, err
+		}
+		update["cover"] = *albumCover
 	}
 
 	change := mgo.Change{

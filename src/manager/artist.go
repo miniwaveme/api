@@ -5,6 +5,7 @@ import (
 	"github.com/miniwaveme/api/src/document"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"image"
 )
 
 const ArtistCollection = "artist"
@@ -27,22 +28,39 @@ func FindArtists(skip int, pageSize int) ([]document.Artist, error) {
 	return artists, err
 }
 
-func CreateArtist(name string) (*document.Artist, error) {
+func CreateArtist(name string, image image.Image) (*document.Artist, error) {
 	col := db.DS().DefaultDB().C(ArtistCollection)
 	oid := bson.NewObjectId()
 	artist := &document.Artist{Id: oid, Name: name}
+
+	if image != nil {
+		artistPicture, err := CreateImage(image)
+		if err != nil {
+			return artist, err
+		}
+		artist.Image = *artistPicture
+	}
+
 	err := col.Insert(artist)
 
 	return artist, err
 }
 
-func UpdateArtist(oid string, name string) (*document.Artist, error) {
+func UpdateArtist(oid string, name string, image image.Image) (*document.Artist, error) {
 	col := db.DS().DefaultDB().C(ArtistCollection)
 	artist := &document.Artist{}
 
 	update := bson.M{}
 	if name != "" {
 		update["name"] = name
+	}
+
+	if image != nil {
+		artistPicture, err := CreateImage(image)
+		if err != nil {
+			return artist, err
+		}
+		update["image"] = *artistPicture
 	}
 
 	change := mgo.Change{
