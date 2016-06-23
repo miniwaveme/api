@@ -1,6 +1,8 @@
 package document
 
 type Image struct {
-	Path string `json:"path" bson:"path"`
-	Url  string `json:"url" bson:"url"`
+	Original string `json:"original" bson:"original"`
+	Small    string `json:"small" bson:"small"`
+	Medium   string `json:"medium" bson:"medium"`
+	Large    string `json:"large" bson:"large"`
 }

@@ -4,6 +4,8 @@ import (
 	"github.com/miniwaveme/api/src/manager"
 	"github.com/miniwaveme/api/src/router"
 	"gopkg.in/mgo.v2/bson"
+	"image"
+	"image/jpeg"
 	"net/http"
 	"strconv"
 )
@@ -69,15 +71,31 @@ func (ac ArtistController) GetArtist(w http.ResponseWriter, r *http.Request, p r
 }
 
 func (ac ArtistController) CreateArtist(w http.ResponseWriter, r *http.Request, p router.Params) {
-	r.ParseForm()
-	artistName := r.FormValue("name")
+	r.ParseMultipartForm(0)
 
+	artistName := r.FormValue("name")
 	if artistName == "" {
 		router.WriteError(w, 400, "name parameter must be specified")
 		return
 	}
 
-	artist, err := manager.CreateArtist(artistName)
+	var img image.Image = nil
+	_, header, err := r.FormFile("picture")
+	if err == nil && header != nil {
+		file, err := header.Open()
+		if err != nil {
+			router.WriteError(w, 400, "cant open file")
+			return
+		}
+
+		img, err = jpeg.Decode(file)
+		if err != nil {
+			router.WriteError(w, 400, "cant decode JPEG")
+			return
+		}
+		file.Close()
+	}
+	artist, err := manager.CreateArtist(artistName, img)
 	if err != nil {
 		panic(err)
 	}
@@ -86,9 +104,9 @@ func (ac ArtistController) CreateArtist(w http.ResponseWriter, r *http.Request, 
 }
 
 func (ac ArtistController) UpdateArtist(w http.ResponseWriter, r *http.Request, p router.Params) {
-	r.ParseForm()
-	artistName := r.FormValue("name")
+	r.ParseMultipartForm(0)
 
+	artistName := r.FormValue("name")
 	if artistName == "" {
 		router.WriteError(w, 400, "name parameter must be specified")
 		return
@@ -99,7 +117,24 @@ func (ac ArtistController) UpdateArtist(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	artist, err := manager.UpdateArtist(p["id"], artistName)
+	var img image.Image = nil
+	_, header, err := r.FormFile("picture")
+	if err == nil && header != nil {
+
+		file, err := header.Open()
+		if err != nil {
+			router.WriteError(w, 400, "cant open file")
+			return
+		}
+
+		img, err = jpeg.Decode(file)
+		if err != nil {
+			router.WriteError(w, 400, "cant decode JPEG")
+			return
+		}
+		file.Close()
+	}
+	artist, err := manager.UpdateArtist(p["id"], artistName, img)
 	if err != nil {
 		router.WriteError(w, 404, "Artist not found")
 		return

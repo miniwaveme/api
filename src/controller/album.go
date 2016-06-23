@@ -4,6 +4,8 @@ import (
 	"github.com/miniwaveme/api/src/manager"
 	"github.com/miniwaveme/api/src/router"
 	"gopkg.in/mgo.v2/bson"
+	"image"
+	"image/jpeg"
 	"net/http"
 	"strconv"
 )
@@ -68,7 +70,7 @@ func (ac AlbumController) GetAlbum(w http.ResponseWriter, r *http.Request, p rou
 }
 
 func (ac AlbumController) CreateAlbum(w http.ResponseWriter, r *http.Request, p router.Params) {
-	r.ParseForm()
+	r.ParseMultipartForm(0)
 
 	artistId := r.FormValue("artistId")
 	if artistId == "" {
@@ -105,7 +107,25 @@ func (ac AlbumController) CreateAlbum(w http.ResponseWriter, r *http.Request, p 
 		return
 	}
 
-	album, err := manager.CreateAlbum(albumName, albumYear, artist)
+	var img image.Image = nil
+	_, header, err := r.FormFile("cover")
+	if err == nil && header != nil {
+
+		file, err := header.Open()
+		if err != nil {
+			router.WriteError(w, 400, "cant open file")
+			return
+		}
+
+		img, err = jpeg.Decode(file)
+		if err != nil {
+			router.WriteError(w, 400, "cant decode JPEG")
+			return
+		}
+		file.Close()
+	}
+
+	album, err := manager.CreateAlbum(albumName, albumYear, artist, img)
 	if err != nil {
 		panic(err)
 	}
@@ -126,7 +146,7 @@ func (ac AlbumController) UpdateAlbum(w http.ResponseWriter, r *http.Request, p 
 		return
 	}
 
-	r.ParseForm()
+	r.ParseMultipartForm(0)
 	artistId := r.FormValue("artistId")
 	if artistId == "" {
 		router.WriteError(w, 404, "artistId parameter must be specified")
@@ -162,7 +182,25 @@ func (ac AlbumController) UpdateAlbum(w http.ResponseWriter, r *http.Request, p 
 		return
 	}
 
-	album, err := manager.UpdateAlbum(albumId, albumName, albumYear, artist)
+	var img image.Image = nil
+	_, header, err := r.FormFile("cover")
+	if err == nil && header != nil {
+
+		file, err := header.Open()
+		if err != nil {
+			router.WriteError(w, 400, "cant open file")
+			return
+		}
+
+		img, err = jpeg.Decode(file)
+		if err != nil {
+			router.WriteError(w, 400, "cant decode JPEG")
+			return
+		}
+		file.Close()
+	}
+
+	album, err := manager.UpdateAlbum(albumId, albumName, albumYear, artist, img)
 	if err != nil {
 		panic(err)
 	}

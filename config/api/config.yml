@@ -2,3 +2,10 @@ log:
   enabled: true
 indexer:
   enabled: true
+  
+upload:
+  directory: /go/src/github.com/miniwaveme/api/upload
+  scheme: http
+  host: localhost
+  port: 7522
+  
