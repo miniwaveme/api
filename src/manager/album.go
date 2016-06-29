@@ -137,3 +137,36 @@ func RemoveAlbumTrack(oid string, trackNumber int) (*document.Album, error) {
 
 	return album, err
 }
+
+func AddTrackArtist(oid string, number int, artist *document.Artist) (*document.Album, error) {
+	col := db.DS().DefaultDB().C(AlbumCollection)
+
+	album := &document.Album{}
+	change := mgo.Change{
+		Update:    bson.M{"$push": bson.M{"tracks.$.artists": artist.Id}},
+		ReturnNew: true,
+	}
+
+	_, err := col.Find(bson.M{"_id": bson.ObjectIdHex(oid), "tracks.number": number}).Apply(change, &album)
+
+	trackArtist, err := FindArtistById(album.ArtistRef.Hex())
+	album.Artist = *trackArtist
+
+	return album, err
+}
+
+func RemoveTrackArtist(oid string, trackNumber int, artist *document.Artist) (*document.Album, error) {
+	col := db.DS().DefaultDB().C(AlbumCollection)
+
+	album := &document.Album{}
+	change := mgo.Change{
+		Update:    bson.M{"$pull": bson.M{"tracks.$.artists": artist.Id}},
+		ReturnNew: true,
+	}
+
+	_, err := col.Find(bson.M{"_id": bson.ObjectIdHex(oid), "tracks.number": trackNumber}).Apply(change, &album)
+	trackArtist, err := FindArtistById(album.ArtistRef.Hex())
+	album.Artist = *trackArtist
+
+	return album, err
+}

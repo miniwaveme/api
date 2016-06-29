@@ -366,3 +366,117 @@ func (ac AlbumController) RemoveAlbumTrack(w http.ResponseWriter, r *http.Reques
 
 	router.WriteJSON(w, album)
 }
+
+func (ac AlbumController) AddTrackArtist(w http.ResponseWriter, r *http.Request, p router.Params) {
+	albumId, exists := p["id"]
+	if exists == false {
+		router.WriteError(w, 404, "id parameter must be specified")
+		return
+	}
+
+	if bson.IsObjectIdHex(albumId) == false {
+		router.WriteError(w, 400, "Invalid id")
+		return
+	}
+
+	artistId, exists := p["artistId"]
+	if exists == false {
+		router.WriteError(w, 404, "artistId parameter must be specified")
+		return
+	}
+
+	if bson.IsObjectIdHex(artistId) == false {
+		router.WriteError(w, 400, "Invalid artistId")
+		return
+	}
+
+	artist, err := manager.FindArtistById(artistId)
+	if err != nil {
+		router.WriteError(w, 404, "Artist not found")
+		return
+	}
+
+	nbTrackParam, exists := p["nb"]
+	if exists == false {
+		router.WriteError(w, 404, "track number parameter must be specified")
+		return
+	}
+
+	nbTrack, err := strconv.Atoi(nbTrackParam)
+	if err != nil {
+		router.WriteError(w, 404, "track number parameter value")
+		return
+	}
+
+	album, err := manager.FindAlbumById(albumId)
+	if err != nil {
+		router.WriteError(w, 404, "Album not found")
+		panic(err)
+	}
+
+	if album.TrackExist(nbTrack) == false {
+		router.WriteError(w, 404, "Track doesn't exists")
+		return
+	}
+
+	album, err = manager.AddTrackArtist(albumId, nbTrack, artist)
+
+	router.WriteJSON(w, album)
+}
+
+func (ac AlbumController) RemoveTrackArtist(w http.ResponseWriter, r *http.Request, p router.Params) {
+	albumId, exists := p["id"]
+	if exists == false {
+		router.WriteError(w, 404, "id parameter must be specified")
+		return
+	}
+
+	if bson.IsObjectIdHex(albumId) == false {
+		router.WriteError(w, 400, "Invalid id")
+		return
+	}
+
+	artistId, exists := p["artistId"]
+	if exists == false {
+		router.WriteError(w, 404, "artistId parameter must be specified")
+		return
+	}
+
+	if bson.IsObjectIdHex(artistId) == false {
+		router.WriteError(w, 400, "Invalid artistId")
+		return
+	}
+
+	artist, err := manager.FindArtistById(artistId)
+	if err != nil {
+		router.WriteError(w, 404, "Artist not found")
+		return
+	}
+
+	nbTrackParam, exists := p["nb"]
+	if exists == false {
+		router.WriteError(w, 404, "track number parameter must be specified")
+		return
+	}
+
+	nbTrack, err := strconv.Atoi(nbTrackParam)
+	if err != nil {
+		router.WriteError(w, 404, "track number parameter value")
+		return
+	}
+
+	album, err := manager.FindAlbumById(albumId)
+	if err != nil {
+		router.WriteError(w, 404, "Album not found")
+		panic(err)
+	}
+
+	if album.TrackExist(nbTrack) == false {
+		router.WriteError(w, 404, "Track doesn't exists")
+		return
+	}
+
+	album, err = manager.RemoveTrackArtist(albumId, nbTrack, artist)
+
+	router.WriteJSON(w, album)
+}

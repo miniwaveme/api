@@ -32,4 +32,6 @@ func RegisterRoutesV1(r *router.Router) {
 	r.AddRoute("POST", "/v1/album/:id/track/:nb", alc.AddAlbumTrack)
 	r.AddRoute("PUT", "/v1/album/:id/track/:nb", alc.UpdateAlbumTrack)
 	r.AddRoute("DELETE", "/v1/album/:id/track/:nb", alc.RemoveAlbumTrack)
+	r.AddRoute("POST", "/v1/album/:id/track/:nb/artist/:artistId", alc.AddTrackArtist)
+	r.AddRoute("DELETE", "/v1/album/:id/track/:nb/artist/:artistId", alc.RemoveTrackArtist)
 }
